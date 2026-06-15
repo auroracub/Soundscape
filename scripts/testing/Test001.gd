@@ -1,27 +1,26 @@
 extends Node
 
-var synth_voice: ModularVoice
-@onready var speaker: ModularSpeaker3D = $Speaker
+var synth_voice: SynthVoice
+@onready var synth_speaker: SynthSpeaker3D = $Speaker
 
 @export var frequency: float = 440.0;
 
 func _ready() -> void:
 	# Initialize modular voice
-	synth_voice = ModularVoice.new()
+	synth_voice = SynthVoice.new()
 	synth_voice.set_current_frequency(frequency)
 	
 	# Add a basic LFO to modulate the pitch
-	var lfo = SineModulator.new()
+	var lfo = OscSine.new()
 	lfo.frequency_hz = 0.5
 	
-	var vibrato_patch = ModularPatch.new()
+	var vibrato_patch = Patch.new()
 	vibrato_patch.modulator = lfo
 	vibrato_patch.destination = "pitch"
 	vibrato_patch.amount = 0.01
 	synth_voice.patches.append(vibrato_patch)
-	print("test")
 	
-	speaker.audio_input_source = synth_voice
+	synth_speaker.audio_input_source = synth_voice
 	
 	
 	# 2. Instantiate and attach the spatial 3D emitter node

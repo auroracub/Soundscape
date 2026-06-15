@@ -3,7 +3,7 @@ using Godot;
 namespace Soundscape.Modules;
 
 [GlobalClass]
-public partial class WavetableModulator : BaseOscillator
+public partial class OscWavetable : OscBase
 {
 	[Export] public float morph_position { get; set; } = 0.0f;
 

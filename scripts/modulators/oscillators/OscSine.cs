@@ -4,7 +4,7 @@ using Godot;
 namespace Soundscape.Modules;
 
 [GlobalClass]
-public partial class SineModulator : BaseOscillator
+public partial class OscSine : OscBase
 {
 	protected override float compute_sample()
 	{

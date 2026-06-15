@@ -5,10 +5,10 @@ using System;
 namespace Soundscape.Modules;
 
 [GlobalClass]
-public partial class ModularVoice : RefCounted, ISoundSource
+public partial class SynthVoice : RefCounted, ISoundSource
 {
-	[Export] public Array<ModularPatch> patches { get; set; } = new();
-	public WavetableModulator tone { get; private set; } = new WavetableModulator();
+	[Export] public Array<Patch> patches { get; set; } = new();
+	public OscWavetable tone { get; private set; } = new OscWavetable();
 	
 	[Export] public float glide_time { get; set; } = 0.0f;
 	
@@ -53,7 +53,8 @@ public partial class ModularVoice : RefCounted, ISoundSource
 			var patch = patches[i];
 			if (patch == null) continue;
 
-			BaseModulator mod = patch.cached_source;
+			// Modular mod = patch.cached_source;
+			Modular mod = patch.modulator;
 			if (mod == null) continue;
 
 			mod.process_frame(p_delta);
@@ -86,7 +87,8 @@ public partial class ModularVoice : RefCounted, ISoundSource
 	{
 		for (int i = 0; i < patches.Count; i++)
 		{
-			patches[i].cached_source?.set_control_signal(p_signal);
+			// patches[i].cached_source?.set_control_signal(p_signal);
+			patches[i].modulator?.set_control_signal(p_signal);
 		}
 	}
 }

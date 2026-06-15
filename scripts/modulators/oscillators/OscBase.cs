@@ -4,14 +4,14 @@ using Godot;
 namespace Soundscape.Modules;
 
 [GlobalClass]
-public abstract partial class BaseOscillator : BaseModulator
+public abstract partial class OscBase : Modular
 {
 	[Export] public float frequency_hz { get; set; } = 440.0f;
 	[Export] public float phase_modulation { get; set; } = 0.0f;
 	
 	protected float _phase = 0.0f;
 
-	public BaseOscillator() { }
+	public OscBase() { }
 
 	public override void process_frame(float p_delta)
 	{

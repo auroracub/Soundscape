@@ -11,9 +11,9 @@ namespace Soundscape.Modules;
 //}
 
 [GlobalClass]
-public abstract partial class BaseModulator : Resource//, IModulator
+public abstract partial class Modular : Resource//, IModulator
 {
-	public BaseModulator() { }
+	public Modular() { }
 
 	public virtual void process_frame(float p_delta)
 	{
