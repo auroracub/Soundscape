@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dtlu8swcas1o"]
+
+[ext_resource type="Script" uid="uid://ck8lyjs64thqm" path="res://entities/Player3D.gd" id="1_aompc"]
+[ext_resource type="Script" uid="uid://d28qxsrw18c0u" path="res://addons/raytraced_audio/RaytracedAudioListener3D.cs" id="2_xxoci"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sngrh"]
+radius = 0.35
+height = 1.35
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3n4ta"]
+radius = 0.35
+height = 1.35
+
+[node name="Player3D" type="CharacterBody3D" unique_id=269860568]
+script = ExtResource("1_aompc")
+
+[node name="Head" type="Node3D" parent="." unique_id=1412659686]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.1)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=2020699011]
+current = true
+
+[node name="RaytracedAudioListener3D" type="AudioListener3D" parent="Head/Camera3D" unique_id=101706084]
+current = true
+script = ExtResource("2_xxoci")
+metadata/_custom_type_script = "uid://d28qxsrw18c0u"
+
+[node name="Body" type="CollisionShape3D" parent="." unique_id=626152073]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.675, 0)
+shape = SubResource("CapsuleShape3D_sngrh")
+
+[node name="Mesh" type="MeshInstance3D" parent="Body" unique_id=754505219]
+mesh = SubResource("CapsuleMesh_3n4ta")
