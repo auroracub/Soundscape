@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://d16mj8xgyiivu"]
+
+[ext_resource type="Shader" uid="uid://ntk7i2lf1lym" path="res://shaders/BasicShader.gdshader" id="1_8vbra"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_8vbra")
+shader_parameter/u_color = Color(1, 0.53999996, 0.9770001, 1)
+shader_parameter/u_emissive_scale = 10.0
+shader_parameter/u_alpha = 1.0

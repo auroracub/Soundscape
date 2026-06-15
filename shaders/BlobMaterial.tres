@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bu1i0it37n54j"]
+
+[ext_resource type="Shader" uid="uid://cu2h46ufv3p4c" path="res://shaders/BlobShader.gdshader" id="1_c8kxb"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n8cqb"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_c8kxb")
+shader_parameter/u_color = Color(1, 0.53999996, 0.9770001, 1)
+shader_parameter/u_noise = SubResource("NoiseTexture2D_n8cqb")
