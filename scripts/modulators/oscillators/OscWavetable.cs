@@ -28,6 +28,8 @@ public partial class OscWavetable : OscBase
 							 (saw_wave  * (idx == 1 ? 1f : 0f)) + 
 							 (square_wave * (idx == 2 ? 1f : 0f));
 
-		return Mathf.Lerp(current_left, current_right, smooth_weight);
+		_last_value = Mathf.Lerp(current_left, current_right, smooth_weight);
+		
+		return _last_value;
 	}
 }

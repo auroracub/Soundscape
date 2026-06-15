@@ -29,6 +29,16 @@ public partial class SynthVoice : RefCounted, ISoundSource
 		_target_hz = p_frequency;
 	}
 	
+	public void process_frame(double p_delta)
+	{
+		#if DEBUG
+		for (int i = 0; i < patches.Count; i++)
+		{
+			patches[i]?.modulator?.debug_print_check();
+		}
+		#endif
+	}
+	
 	public Vector2 generate_sample(float p_delta, float _sample_rate)
 	{
 		// Frame-rate independent glide calculation
@@ -63,7 +73,7 @@ public partial class SynthVoice : RefCounted, ISoundSource
 			// Route values safely using string mappings
 			if (patch.destination == "pitch") pitch_mod += value;
 			else if (patch.destination == "tone") tone_mod += value;
-			else if (patch.destination == "amp") amp_mod *= value;
+			else if (patch.destination == "amp") amp_mod += value;
 			else if (patch.destination == "pan") pan_mod += value;
 		}
 		
@@ -83,7 +93,7 @@ public partial class SynthVoice : RefCounted, ISoundSource
 		);
 	}
 
-	public void send_trigger(float p_signal)
+	public void send_pulse(float p_signal)
 	{
 		for (int i = 0; i < patches.Count; i++)
 		{

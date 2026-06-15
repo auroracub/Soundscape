@@ -21,7 +21,6 @@ public partial class Envelope : Modular
 	private EnvelopeStage _current_stage = EnvelopeStage.Idle;
 	private float _stage_timer = 0.0f;
 	private float _start_level_of_stage = 0.0f;
-	private float _current_output_value = 0.0f;
 	private bool _last_gate_state = false;
 
 	public override void process_frame(float p_delta)
@@ -61,19 +60,19 @@ public partial class Envelope : Modular
 			case EnvelopeStage.Attack:
 				if (attack <= 0.0f)
 				{
-					_current_output_value = 1.0f;
+					_last_value = 1.0f;
 					transition_to(EnvelopeStage.Hold);
 				}
 				else
 				{
 					float pct = Mathf.Clamp(_stage_timer / attack, 0.0f, 1.0f);
-					_current_output_value = Mathf.Lerp(_start_level_of_stage, 1.0f, pct);
+					_last_value = Mathf.Lerp(_start_level_of_stage, 1.0f, pct);
 					if (pct >= 1.0f) transition_to(EnvelopeStage.Hold);
 				}
 				break;
 
 			case EnvelopeStage.Hold:
-				_current_output_value = 1.0f;
+				_last_value = 1.0f;
 				if (_stage_timer >= hold) transition_to(EnvelopeStage.Decay);
 				break;
 
@@ -81,13 +80,13 @@ public partial class Envelope : Modular
 				float target_level = (mode == EnvelopeMode.Ahdsr) ? sustain : 0.0f;
 				if (decay <= 0.0f)
 				{
-					_current_output_value = target_level;
+					_last_value = target_level;
 					transition_to(mode == EnvelopeMode.Ahdsr ? EnvelopeStage.Sustain : EnvelopeStage.Idle);
 				}
 				else
 				{
 					float pct = Mathf.Clamp(_stage_timer / decay, 0.0f, 1.0f);
-					_current_output_value = Mathf.Lerp(1.0f, target_level, pct);
+					_last_value = Mathf.Lerp(1.0f, target_level, pct);
 					if (pct >= 1.0f)
 					{
 						transition_to(mode == EnvelopeMode.Ahdsr ? EnvelopeStage.Sustain : EnvelopeStage.Idle);
@@ -96,19 +95,19 @@ public partial class Envelope : Modular
 				break;
 
 			case EnvelopeStage.Sustain:
-				_current_output_value = sustain;
+				_last_value = sustain;
 				break;
 
 			case EnvelopeStage.Release:
 				if (release <= 0.0f)
 				{
-					_current_output_value = 0.0f;
+					_last_value = 0.0f;
 					transition_to(EnvelopeStage.Idle);
 				}
 				else
 				{
 					float pct = Mathf.Clamp(_stage_timer / release, 0.0f, 1.0f);
-					_current_output_value = Mathf.Lerp(_start_level_of_stage, 0.0f, pct);
+					_last_value = Mathf.Lerp(_start_level_of_stage, 0.0f, pct);
 					if (pct >= 1.0f) transition_to(EnvelopeStage.Idle);
 				}
 				break;
@@ -119,11 +118,11 @@ public partial class Envelope : Modular
 	{
 		_current_stage = p_next_stage;
 		_stage_timer = 0.0f;
-		_start_level_of_stage = _current_output_value;
+		_start_level_of_stage = _last_value;
 	}
 
 	protected override float compute_sample()
 	{
-		return _current_output_value;
+		return _last_value;
 	}
 }

@@ -5,7 +5,6 @@ namespace Soundscape.Modules;
 [GlobalClass]
 public partial class OscSampleAndHold : OscBase
 {
-	private float _last_sampled_value = 0.0f;
 	private float _previous_phase = 0.0f;
 
 	protected override float compute_sample()
@@ -21,8 +20,8 @@ public partial class OscSampleAndHold : OscBase
 		float new_random_sample = ((raw_random - Mathf.Floor(raw_random)) * 2.0f) - 1.0f;
 
 		// Blending mask: updates value only if hasWrapped == 1.0f
-		_last_sampled_value = Mathf.Lerp(_last_sampled_value, new_random_sample, has_wrapped);
+		_last_value = Mathf.Lerp(_last_value, new_random_sample, has_wrapped);
 
-		return _last_sampled_value;
+		return _last_value;
 	}
 }

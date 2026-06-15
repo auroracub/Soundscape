@@ -49,7 +49,9 @@ public partial class SynthSpeaker3D : RaytracedAudioPlayer3D
 		{
 			sample_buffer[i] = _active_audio_source.generate_sample(delta, sample_rate);
 		}
-
+		
+		_active_audio_source.process_frame(p_delta);
+		
 		_playback.PushBuffer(sample_buffer);
 	}
 }

@@ -11,10 +11,14 @@ namespace Soundscape.Modules;
 //}
 
 [GlobalClass]
-public abstract partial class Modular : Resource//, IModulator
+public abstract partial class Modular : RefCounted//Resource//, IModulator
 {
 	public Modular() { }
-
+	
+	[Export] public bool debug_enabled = false;
+	
+	protected float _last_value = 0.0f;
+	
 	public virtual void process_frame(float p_delta)
 	{
 		// General modulators execute their math variations per audio frame tick
@@ -31,4 +35,18 @@ public abstract partial class Modular : Resource//, IModulator
 	}
 
 	protected abstract float compute_sample();
+	
+	public void debug_print()
+	{
+		#if DEBUG
+		GD.Print($"Value: {_last_value}");
+		#endif
+	}
+	
+	public void debug_print_check()
+	{
+		#if DEBUG
+		if (debug_enabled) debug_print();
+		#endif
+	}
 }
