@@ -13,7 +13,7 @@ public abstract partial class OscBase : Modular
 
 	public OscBase() { }
 
-	public override void process_frame(float p_delta)
+	public override void process_frame_concrete(float p_delta)
 	{
 		_phase += frequency_hz * p_delta + phase_modulation;
 

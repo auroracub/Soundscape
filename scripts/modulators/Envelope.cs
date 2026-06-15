@@ -23,7 +23,7 @@ public partial class Envelope : Modular
 	private float _start_level_of_stage = 0.0f;
 	private bool _last_gate_state = false;
 
-	public override void process_frame(float p_delta)
+	public override void process_frame_concrete(float p_delta)
 	{
 		if (_current_stage == EnvelopeStage.Idle) return;
 

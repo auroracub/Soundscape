@@ -8,21 +8,33 @@ var synth_voice: SynthVoice
 var lfo = OscSine.new()
 var envelope = Envelope.new()
 var random = OscSampleAndHold.new()
+var relay = Relay.new()
 
 func _ready() -> void:
 	synth_voice = SynthVoice.new()
+	synth_voice.glide_time = 2.5
 	synth_voice.set_current_frequency(frequency)
 	
 	lfo.frequency_hz = 0.5
 	
-	envelope.attack = 0.05
+	envelope.attack = 0.01
 	envelope.hold = 0.0
-	envelope.decay = 0.2
+	envelope.decay = 0.15
 	envelope.sustain = 0.2
-	envelope.release = 0.1
-	envelope.debug_enabled = true
+	envelope.release = 0.15
+	# envelope.debug_enabled = true
+	envelope.subscribers.append(relay)
 	
-	random.frequency_hz = 12.0
+	random.frequency_hz = 4.0
+	random.matrix_target = "random"
+	random.debug_enabled = true
+	
+	relay.matrix_source = "random"
+	relay.in_lo = -1.0
+	relay.in_hi = 1.0
+	relay.out_lo = 0.0
+	relay.out_hi = 1.0
+	relay.target = envelope
 	
 	var vibrato_patch = Patch.new()
 	vibrato_patch.modulator = lfo
@@ -31,12 +43,12 @@ func _ready() -> void:
 	vibrato_patch.map_hi = 0.01
 	synth_voice.patches.append(vibrato_patch)
 	
-	#var random_patch = Patch.new()
-	#random_patch.modulator = random
-	#random_patch.destination = "tone"
-	#random_patch.map_lo = 0.0
-	#random_patch.map_hi = 0.2
-	#synth_voice.patches.append(random_patch)
+	var random_patch = Patch.new()
+	random_patch.modulator = random
+	random_patch.destination = "pitch"
+	random_patch.map_lo = -110.0
+	random_patch.map_hi = 110.0
+	synth_voice.patches.append(random_patch)
 	
 	var amp_patch = Patch.new()
 	amp_patch.modulator = envelope
@@ -49,8 +61,8 @@ func _ready() -> void:
 	tone_patch.modulator = envelope
 	tone_patch.destination = "tone"
 	tone_patch.map_lo = 0.0
-	tone_patch.map_hi = 0.4
-	synth_voice.patches.append(amp_patch)
+	tone_patch.map_hi = 0.2
+	synth_voice.patches.append(tone_patch)
 	
 	synth_speaker.audio_input_source = synth_voice
 	

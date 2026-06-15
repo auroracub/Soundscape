@@ -31,14 +31,14 @@ fog_depth_end = 20.5
 
 [node name="SpeakerA" parent="." unique_id=1307446938 instance=ExtResource("1_i1x48")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3)
-frequency = 330.0
+frequency = 391.995
 
 [node name="Room" parent="." unique_id=869547218 instance=ExtResource("4_vlsnv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
 
 [node name="SpeakerB" parent="Room" unique_id=1333117063 instance=ExtResource("1_i1x48")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-frequency = 660.0
+frequency = 493.88
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=406609292]
 transform = Transform3D(1, 0, 0, 0, -0.20331712, 0.9791129, 0, -0.9791129, -0.20331712, 0, 0, 0)

@@ -66,7 +66,7 @@ public partial class SynthVoice : RefCounted, ISoundSource
 			// Modular mod = patch.cached_source;
 			Modules.Modular mod = patch.modulator;
 			if (mod == null) continue;
-
+			
 			mod.process_frame(p_delta);
 			float value = Libraries.MathLib.remap(0.0f, 1.0f, patch.map_lo, patch.map_hi, mod.get_current_value());
 			
@@ -77,7 +77,7 @@ public partial class SynthVoice : RefCounted, ISoundSource
 			else if (patch.destination == "pan") pan_mod += value;
 		}
 		
-		float final_hz = _current_hz * (1.0f + pitch_mod);
+		float final_hz = _current_hz + pitch_mod; // _current_hz * (1.0f + pitch_mod);
 		tone.frequency_hz = final_hz;
 		tone.morph_position = tone_mod;
 		
