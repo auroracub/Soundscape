@@ -1,0 +1,3 @@
+This project is currently licensed under CC-BY-NC-SA: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+This means that it is free to share, redistribute, and edit, provided that you give attribution, don't use it for commercial purposes, and use the same license for your own project. If you have any questions or would like to use this project for commercial purposes, feel free to contact me at auroracub@proton.me.
