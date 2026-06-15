@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://bw8unlwd1nfk4"]
+
+[ext_resource type="PackedScene" uid="uid://dtlu8swcas1o" path="res://Scene3D/Player3D.tscn" id="1_crlj1"]
+[ext_resource type="PackedScene" uid="uid://bp63wg5237f3w" path="res://Scene3D/TestBlob3D.tscn" id="2_vbsjm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7v700"]
+shading_mode = 0
+albedo_color = Color(0.47843137, 0.4509804, 1, 1)
+
+[sub_resource type="Environment" id="Environment_04nio"]
+background_mode = 1
+tonemap_mode = 3
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.972549, 0, 0.45882353, 1)
+fog_light_energy = 1.5
+fog_density = 1.0
+fog_depth_curve = 0.5
+fog_depth_begin = 4.0
+fog_depth_end = 22.0
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_7v700"]
+
+[sub_resource type="Compositor" id="Compositor_2p4cr"]
+
+[node name="Node3D" type="Node3D" unique_id=881984792]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=406609292]
+transform = Transform3D(1, 0, 0, 0, -0.20331712, 0.9791129, 0, -0.9791129, -0.20331712, 0, 0, 0)
+
+[node name="Player3d" parent="." unique_id=269860568 instance=ExtResource("1_crlj1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="BlobOne" parent="." unique_id=27032108 instance=ExtResource("2_vbsjm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3, 0.68, 7.1)
+frequency = 130.81
+tempo = 100.0
+
+[node name="BlobTwo" parent="." unique_id=710529201 instance=ExtResource("2_vbsjm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0.4, -6.5)
+frequency = 261.63
+tempo = 40.0
+
+[node name="BlobThree" parent="." unique_id=520975637 instance=ExtResource("2_vbsjm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0.3, 1.9)
+frequency = 523.25
+
+[node name="Ground" type="CSGBox3D" parent="." unique_id=687797650]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+size = Vector3(1000, 0.1, 1000)
+material = SubResource("StandardMaterial3D_7v700")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1683874633]
+environment = SubResource("Environment_04nio")
+camera_attributes = SubResource("CameraAttributesPractical_7v700")
+compositor = SubResource("Compositor_2p4cr")
