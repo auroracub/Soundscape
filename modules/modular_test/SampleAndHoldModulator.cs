@@ -3,7 +3,7 @@ using Godot;
 namespace Soundscape.Modules;
 
 [GlobalClass]
-public partial class SampleAndHoldModulator : BaseModulator
+public partial class SampleAndHoldModulator : BaseOscillator
 {
 	private float _last_sampled_value = 0.0f;
 	private float _previous_phase = 0.0f;
