@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bp63wg5237f3w"]
+
+[ext_resource type="Script" uid="uid://cnd02a3d3dbt5" path="res://entities/TestBlob.gd" id="1_dpe3o"]
+[ext_resource type="Material" uid="uid://bu1i0it37n54j" path="res://shaders/BlobMaterial.tres" id="2_cinur"]
+[ext_resource type="Script" path="res://Modules/Synths/MonoSynth3D.cs" id="3_53fnw"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_f06hh"]
+radius = 0.2
+height = 0.5
+radial_segments = 16
+rings = 8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_f06hh"]
+radius = 0.28
+
+[node name="TestBlob" type="Node3D" unique_id=27032108]
+script = ExtResource("1_dpe3o")
+
+[node name="Blob" type="MeshInstance3D" parent="." unique_id=2044302572]
+material_override = ExtResource("2_cinur")
+mesh = SubResource("SphereMesh_f06hh")
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="Blob" unique_id=1280340142]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blob/AnimatableBody3D" unique_id=1490161081]
+shape = SubResource("SphereShape3D_f06hh")
+
+[node name="Synth" type="AudioStreamPlayer3D" parent="." unique_id=1848934912]
+volume_db = -18.0
+max_db = -18.0
+script = ExtResource("3_53fnw")
+metadata/_custom_type_script = "uid://c3c2im5earnx"
