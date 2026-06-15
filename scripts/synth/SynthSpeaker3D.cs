@@ -4,7 +4,7 @@ using Godot;
 namespace Soundscape.Synth;
 
 [GlobalClass]
-public partial class SynthSpeaker3D : RaytracedAudioPlayer3D
+public partial class SynthSpeaker3D : AudioStreamPlayer3D//RaytracedAudioPlayer3D
 {
 	[Export] public float sample_rate { get; set; } = 22050.0f;
 
