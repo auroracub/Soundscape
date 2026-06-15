@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Scale" format=3 uid="uid://di4vg6i3rrp1v"]
+
+[ext_resource type="Script" uid="uid://gt70kmprxt34" path="res://modules/Systems/Scale.cs" id="1_dvr5q"]
+
+[resource]
+script = ExtResource("1_dvr5q")
+metadata/_custom_type_script = "uid://gt70kmprxt34"
