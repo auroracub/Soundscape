@@ -2,13 +2,13 @@ using Godot;
 using Godot.Collections;
 using System;
 
-namespace Soundscape.Modules;
+namespace Soundscape.Synth;
 
 [GlobalClass]
 public partial class SynthVoice : RefCounted, ISoundSource
 {
-	[Export] public Array<Patch> patches { get; set; } = new();
-	public OscWavetable tone { get; private set; } = new OscWavetable();
+	[Export] public Array<Modules.Patch> patches { get; set; } = new();
+	public Modules.OscWavetable tone { get; private set; } = new Modules.OscWavetable();
 	
 	[Export] public float glide_time { get; set; } = 0.0f;
 	
@@ -43,8 +43,8 @@ public partial class SynthVoice : RefCounted, ISoundSource
 		}
 		
 		float pitch_mod = 0.0f;
-		float tone_mod = 0.33f;
-		float amp_mod = 1.0f;
+		float tone_mod = 0.0f;
+		float amp_mod = 0.0f;
 		float pan_mod = 0.0f;
 
 		// Evaluate and calculate cv patch input matrix
@@ -54,11 +54,11 @@ public partial class SynthVoice : RefCounted, ISoundSource
 			if (patch == null) continue;
 
 			// Modular mod = patch.cached_source;
-			Modular mod = patch.modulator;
+			Modules.Modular mod = patch.modulator;
 			if (mod == null) continue;
 
 			mod.process_frame(p_delta);
-			float value = mod.get_current_value() * patch.amount;
+			float value = Libraries.MathLib.remap(0.0f, 1.0f, patch.map_lo, patch.map_hi, mod.get_current_value());
 			
 			// Route values safely using string mappings
 			if (patch.destination == "pitch") pitch_mod += value;

@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace Soundscape.Modules;
+namespace Soundscape.Synth;
 
 [GlobalClass]
 public partial class SynthSpeaker3D : RaytracedAudioPlayer3D

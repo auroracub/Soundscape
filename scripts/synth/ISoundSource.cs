@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Soundscape.Modules;
+namespace Soundscape.Synth;
 
 public interface ISoundSource
 {

@@ -8,8 +8,9 @@ public partial class Patch : Resource
 {
 	[Export] public Modular modulator { get; set; }
 
-	[Export] public string destination { get; set; } = "pitch";
-	[Export] public float amount { get; set; } = 1.0f;
-	
-	// public Modular cached_source => modulator;
+	[Export] public string destination { get; set; } = "";
+	[Export] public float map_lo { get; set; } = 0.0f;
+	[Export] public float map_hi { get; set; } = 1.0f;
+	//[Export] public float scale { get; set; } = 1.0f;
+	//[Export] public float offset { get; set; } = 0.0f;
 }
