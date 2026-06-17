@@ -29,7 +29,7 @@ project/assembly_name="Soundscape"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/raytraced_audio/plugin.cfg")
+enabled=PackedStringArray()
 
 [input]
 

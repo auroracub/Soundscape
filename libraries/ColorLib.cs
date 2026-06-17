@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace Soundscape.Libraries;
+// namespace Soundscape.Libraries;
 
 [GlobalClass]
 public partial class ColorLib : Godot.GodotObject

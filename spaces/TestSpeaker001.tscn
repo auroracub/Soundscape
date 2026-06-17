@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://jw5ngtlpf6h0"]
 
 [ext_resource type="Script" uid="uid://bdim8dhsp0ai4" path="res://scripts/testing/Test001.gd" id="1_l13r3"]
-[ext_resource type="Script" uid="uid://bngftem76o6nw" path="res://scripts/synth/SynthSpeaker3D.cs" id="2_8vca1"]
 [ext_resource type="Material" uid="uid://d16mj8xgyiivu" path="res://shaders/BasicMaterial.tres" id="2_eiwq6"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_23nea"]
@@ -28,5 +27,4 @@ volume_db = -18.0
 unit_size = 2.0
 max_db = -18.0
 max_distance = 200.0
-script = ExtResource("2_8vca1")
 metadata/_custom_type_script = "uid://bngftem76o6nw"

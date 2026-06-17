@@ -1,12 +1,12 @@
 using System;
 using Godot;
 
-namespace Soundscape.Libraries;
+// namespace Soundscape.Libraries;
 
 [GlobalClass]
 public partial class MusicLib : RefCounted
 {
-	public static float GetDegreeFromFrequency(Soundscape.Modules.Scale scale, float targetFrequency)
+	public static float get_degree_from_frequency(Soundscape.Modules.Scale scale, float targetFrequency)
 	{
 		if (scale == null || targetFrequency <= 0.0f) return 0.0f;
 

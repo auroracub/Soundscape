@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace Soundscape.Libraries;
+// namespace Soundscape.Libraries;
 
 [GlobalClass]
 public partial class MathLib : Godot.GodotObject
@@ -11,9 +11,9 @@ public partial class MathLib : Godot.GodotObject
 		//return Mathf.Remap(value, fromMin, fromMax, toMin, toMax);
 	//}
 	
-	public static float remap(float inputMin, float inputMax, float outputMin, float outputMax, float value)
+	public static float remap(float in_min, float in_max, float out_min, float out_max, float value)
 	{
-		return outputMin + (value - inputMin) * (outputMax - outputMin) / (inputMax - inputMin);
+		return out_min + (value - in_min) * (out_max - out_min) / (in_max - in_min);
 	}
 	
 	public static float seconds_to_hz(float seconds)

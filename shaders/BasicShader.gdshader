@@ -3,7 +3,7 @@ shader_type spatial;
 
 uniform vec3 u_color: source_color = vec3(0.939, 0.0, 0.17);
 uniform float u_emissive_scale = 1.0;
-uniform float u_alpha = 1.0;
+instance uniform float u_alpha = 1.0;
 
 void fragment() {
 	ALBEDO = u_color;

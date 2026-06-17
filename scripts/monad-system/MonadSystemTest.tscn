@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://dsji71sb80msy"]
+
+[ext_resource type="Material" uid="uid://d16mj8xgyiivu" path="res://shaders/BasicMaterial.tres" id="2_gxpf8"]
+[ext_resource type="Script" uid="uid://bt8vc6o4rbnm7" path="res://scripts/monad-system/modules/MonadSystemTest.gd" id="2_to61l"]
+[ext_resource type="PackedScene" uid="uid://dtlu8swcas1o" path="res://entities/Player3D.tscn" id="3_4tl6h"]
+[ext_resource type="Script" uid="uid://csgdfbhitcb5h" path="res://scripts/monad-system/modules/SynthSpeaker3D.cs" id="3_to61l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7v700"]
+
+[sub_resource type="Sky" id="Sky_gxpf8"]
+
+[sub_resource type="Environment" id="Environment_04nio"]
+background_mode = 1
+background_color = Color(1, 1, 1, 1)
+sky = SubResource("Sky_gxpf8")
+tonemap_mode = 3
+glow_enabled = true
+glow_intensity = 1.32
+glow_bloom = 0.31
+fog_enabled = true
+fog_light_color = Color(0.13640001, 0.62, 0.4023801, 1)
+fog_density = 0.03
+fog_depth_begin = 4.0
+fog_depth_end = 38.0
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_7v700"]
+
+[sub_resource type="Compositor" id="Compositor_2p4cr"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_to61l"]
+material = ExtResource("2_gxpf8")
+radius = 0.23
+height = 0.44
+
+[node name="Node3D" type="Node3D" unique_id=881984792]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=406609292]
+transform = Transform3D(1, 0, 0, 0, -0.20331712, 0.9791129, 0, -0.9791129, -0.20331712, 0, 0, 0)
+
+[node name="Player3d" parent="." unique_id=269860568 instance=ExtResource("3_4tl6h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="Wall" type="CSGBox3D" parent="." unique_id=1850170234]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, -5.975687)
+use_collision = true
+size = Vector3(8.015, 7.175, 0.25)
+material = SubResource("StandardMaterial3D_7v700")
+
+[node name="Ground" type="CSGBox3D" parent="." unique_id=687797650]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+use_collision = true
+size = Vector3(1000, 0.1, 1000)
+material = SubResource("StandardMaterial3D_7v700")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1683874633]
+environment = SubResource("Environment_04nio")
+camera_attributes = SubResource("CameraAttributesPractical_7v700")
+compositor = SubResource("Compositor_2p4cr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=350780769]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("SphereMesh_to61l")
+script = ExtResource("2_to61l")
+
+[node name="SynthSpeaker3D" type="AudioStreamPlayer3D" parent="MeshInstance3D" unique_id=2086184128]
+attenuation_model = 2
+unit_size = 2.0
+max_distance = 300.0
+script = ExtResource("3_to61l")
+metadata/_custom_type_script = "uid://csgdfbhitcb5h"
