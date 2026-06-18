@@ -32,11 +32,11 @@ public partial class OscWavetable : OscBase
 		};
 	}
 	
-	protected override void update_state()
+	protected override void update_state(float p_sample_rate)
 	{
 		float frequency = frequency_param.evaluate();
 		float amplitude = amplitude_param.evaluate();
-		advance_phase(frequency);
+		advance_phase(p_sample_rate, frequency);
 
 		float lookup_pos = Mathf.PosMod(phase / MathF.Tau, 1.0f);
 		float table_index_raw = lookup_pos * TABLE_SIZE;

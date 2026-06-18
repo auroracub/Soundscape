@@ -21,6 +21,6 @@ public class PatchConnection
 
 	public float evaluate()
 	{
-		return source.tick_mono() * _scale + _bias;
+		return source.process_mono_sample(source.last_sample_rate) * _scale + _bias;
 	}
 }

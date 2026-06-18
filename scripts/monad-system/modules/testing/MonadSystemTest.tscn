@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dsji71sb80msy"]
 
 [ext_resource type="Material" uid="uid://d16mj8xgyiivu" path="res://shaders/BasicMaterial.tres" id="2_gxpf8"]
-[ext_resource type="Script" uid="uid://bt8vc6o4rbnm7" path="res://scripts/monad-system/modules/Test.gd" id="2_to61l"]
+[ext_resource type="Script" uid="uid://bt8vc6o4rbnm7" path="res://scripts/monad-system/modules/testing/Test.gd" id="2_to61l"]
 [ext_resource type="PackedScene" uid="uid://dtlu8swcas1o" path="res://entities/Player3D.tscn" id="3_4tl6h"]
-[ext_resource type="Script" uid="uid://csgdfbhitcb5h" path="res://scripts/monad-system/modules/SynthSpeaker3D.cs" id="3_to61l"]
+[ext_resource type="Script" uid="uid://csgdfbhitcb5h" path="res://scripts/monad-system/modules/Speaker3D.cs" id="3_to61l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7v700"]
 
@@ -62,7 +62,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("SphereMesh_to61l")
 script = ExtResource("2_to61l")
 
-[node name="SynthSpeaker3D" type="AudioStreamPlayer3D" parent="MeshInstance3D" unique_id=2086184128]
+[node name="Speaker3D" type="AudioStreamPlayer3D" parent="MeshInstance3D" unique_id=2086184128]
 attenuation_model = 2
 unit_size = 2.0
 max_distance = 300.0

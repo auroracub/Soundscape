@@ -33,15 +33,15 @@ public partial class Envelope : AudioModule
 		};
 	}
 	
-	protected override void update_state()
+	protected override void update_state(float p_sample_rate)
 	{
 		float trigger = gate_param.evaluate();
 		
-		float attack_rate = Mathf.Max(0.001f, attack_param.evaluate()) * sample_rate;
-		float hold_frames = Mathf.Max(0.0f, hold_param.evaluate()) * sample_rate;
-		float decay_rate = Mathf.Max(0.001f, decay_param.evaluate()) * sample_rate;
+		float attack_rate = Mathf.Max(0.001f, attack_param.evaluate()) * p_sample_rate;
+		float hold_frames = Mathf.Max(0.0f, hold_param.evaluate()) * p_sample_rate;
+		float decay_rate = Mathf.Max(0.001f, decay_param.evaluate()) * p_sample_rate;
 		float sustain_level = Mathf.Clamp(sustain_param.evaluate(), 0.0f, 1.0f);
-		float release_rate = Mathf.Max(0.001f, release_param.evaluate()) * sample_rate;
+		float release_rate = Mathf.Max(0.001f, release_param.evaluate()) * p_sample_rate;
 		
 		if (trigger > 0.0f && _prev_trigger <= 0.0f) 
 		{ 

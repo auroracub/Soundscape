@@ -16,7 +16,7 @@ public partial class Amp : AudioModule
 		};
 	}
 	
-	protected override void update_state()
+	protected override void update_state(float p_sample_rate)
 	{
 		cached_mono_sample = input_param.evaluate() * level_param.evaluate();
 		cached_stereo_sample.X = cached_mono_sample;

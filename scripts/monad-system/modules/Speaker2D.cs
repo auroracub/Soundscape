@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class SynthSpeaker3D : AudioStreamPlayer3D
+public partial class Speaker2D : AudioStreamPlayer2D
 {
 	[Export] public float sample_rate { get; set; } = 44100.0f;
 	
@@ -12,6 +12,9 @@ public partial class SynthSpeaker3D : AudioStreamPlayer3D
 	
 	public void connect_source(AudioModule p_module)
 	{
+		// NOTE:
+		// Should the sample rate of each audio module in the chain be locked to this sample rate?
+		// Or is the sample rate of the audio module irrelevant?
 		_source_module = p_module;
 	}
 
@@ -42,7 +45,7 @@ public partial class SynthSpeaker3D : AudioStreamPlayer3D
 		{
 			AudioClock.current_sample_index++;
 			
-			Vector2 sample = _source_module.tick_stereo() * _master_gain;
+			Vector2 sample = _source_module.process_stereo_sample(sample_rate) * _master_gain;
 			
 			sample.X = Math.Clamp(sample.X, -1.0f, 1.0f);
 			sample.Y = Math.Clamp(sample.Y, -1.0f, 1.0f);

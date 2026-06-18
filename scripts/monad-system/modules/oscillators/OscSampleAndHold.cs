@@ -4,13 +4,13 @@ using System;
 [GlobalClass]
 public partial class OscSampleAndHold : OscBase
 {
-	protected override void update_state()
+	protected override void update_state(float p_sample_rate)
 	{
 		float frequency = frequency_param.evaluate();
 		float amplitude = amplitude_param.evaluate();
 		float current_phase = phase;
 		
-		advance_phase(frequency);
+		advance_phase(p_sample_rate, frequency);
 
 		// If the phase wraps around, it's time to generate a new sample
 		if (phase < current_phase)

@@ -31,9 +31,9 @@ public abstract partial class OscBase : AudioModule
 		//}
 	}
 	
-	protected void advance_phase(float p_freq)
+	protected void advance_phase(float p_sample_rate, float p_freq)
 	{
-		phase += (MathF.Tau * p_freq) / sample_rate;
+		phase += (MathF.Tau * p_freq) / p_sample_rate;
 		while (phase >= MathF.Tau) phase -= MathF.Tau;
 		while (phase < 0.0f) phase += MathF.Tau;
 	}
