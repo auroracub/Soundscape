@@ -68,8 +68,8 @@ public partial class OscWavetable : OscBase
 		float sample_wave_a = _tables[wave_a, index_a] + (_tables[wave_a, index_b] - _tables[wave_a, index_a]) * frac_x;
 		float sample_wave_b = _tables[wave_b, index_a] + (_tables[wave_b, index_b] - _tables[wave_b, index_a]) * frac_x;
 
-		_cached_mod_sample = sample_wave_a + (sample_wave_b - sample_wave_a) * frac_y;
-		_cached_audio_left_sample = _cached_mod_sample;
-		_cached_audio_right_sample = _cached_mod_sample;
+		_cached_mono_sample = sample_wave_a + (sample_wave_b - sample_wave_a) * frac_y;
+		_cached_stereo_sample.X = _cached_mono_sample;
+		_cached_stereo_sample.Y = _cached_mono_sample;
 	}
 }

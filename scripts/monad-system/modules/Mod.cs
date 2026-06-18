@@ -16,7 +16,7 @@ public class Mod
 		var old_chain = _mod_chain;
 		_mod_chain = () => old_chain() + p_mod_function();
 	}
-
+	
 	public float evaluate()
 	{
 		return base_value + _mod_chain();

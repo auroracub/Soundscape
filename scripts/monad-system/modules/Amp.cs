@@ -37,18 +37,18 @@ public partial class Amp : AudioModule
 	
 	protected override void rebuild_signal_chain()
 	{
-		_cached_audio_chain = new StereoSignal(() =>
+		_cached_stereo_chain = new StereoSignal(() =>
 		{
-			_cached_mod_sample = input_param.evaluate() * level_param.evaluate();
-			_cached_audio_left_sample = _cached_mod_sample;
-			_cached_audio_right_sample = _cached_mod_sample;
-			return new Vector2(_cached_audio_left_sample, _cached_audio_right_sample);
+			_cached_mono_sample = input_param.evaluate() * level_param.evaluate();
+			_cached_stereo_sample.X = _cached_mono_sample;
+			_cached_stereo_sample.Y = _cached_mono_sample;
+			return _cached_stereo_sample;
 		});
 		
-		_cached_mod_chain = new MonoSignal(() =>
+		_cached_mono_chain = new MonoSignal(() =>
 		{
-			_cached_mod_sample = input_param.evaluate() * level_param.evaluate();
-			return _cached_mod_sample;
+			_cached_mono_sample = input_param.evaluate() * level_param.evaluate();
+			return _cached_mono_sample;
 		});
 	}
 }

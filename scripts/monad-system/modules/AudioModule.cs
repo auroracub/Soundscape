@@ -5,18 +5,19 @@ public abstract partial class AudioModule : RefCounted
 {
 	protected float sample_rate = 44100.0f;
 	
-	protected MonoSignal _cached_mod_chain;
-	protected StereoSignal _cached_audio_chain;
+	protected MonoSignal _cached_mono_chain;
+	protected StereoSignal _cached_stereo_chain;
 	
-	protected volatile float _cached_mod_sample = 0.0f;
-	protected volatile float _cached_audio_left_sample = 0.0f;
-	protected volatile float _cached_audio_right_sample = 0.0f;
+	protected volatile float _cached_mono_sample = 0.0f;
+	// protected volatile float _cached_stereo_sample.X = 0.0f;
+	// protected volatile float _cached_stereo_sample.Y = 0.0f;
+	protected Vector2 _cached_stereo_sample = Vector2.Zero;
 	
 	private Callable _frame_callback;
 	private bool _has_callback = false;
 
-	public virtual StereoSignal get_audio_signal() => _cached_audio_chain;
-	public virtual MonoSignal get_mod_signal() => _cached_mod_chain;
+	public virtual StereoSignal get_audio_signal() => _cached_stereo_chain;
+	public virtual MonoSignal get_mod_signal() => _cached_mono_chain;
 	public abstract Mod get_mod_from_name(string p_mod_name);
 	
 	public virtual void set_base_value(string p_mod_name, float p_value)
@@ -62,14 +63,14 @@ public abstract partial class AudioModule : RefCounted
 	
 	protected virtual void rebuild_signal_chain()
 	{
-		_cached_audio_chain = new StereoSignal(() => { 
-			update_state(); 
-			return new Vector2(_cached_audio_left_sample, _cached_audio_right_sample); 
+		_cached_stereo_chain = new StereoSignal(() => { 
+			update_state();
+			return _cached_stereo_sample; 
 		});
 		
-		_cached_mod_chain = new MonoSignal(() => { 
+		_cached_mono_chain = new MonoSignal(() => { 
 			update_state(); 
-			return _cached_mod_sample; 
+			return _cached_mono_sample; 
 		});
 	}
 	
@@ -85,7 +86,7 @@ public abstract partial class AudioModule : RefCounted
 
 		try
 		{
-			_frame_callback.Call(_cached_mod_sample);
+			_frame_callback.Call(_cached_mono_sample);
 		}
 		catch (Exception e)
 		{

@@ -54,7 +54,7 @@ public partial class SynthVoice : AudioModule
 	public override AudioModule patch_out(AudioModule p_target_module, string p_target_param, float p_source_min = 0.0f, float p_source_max = 1.0f, float p_target_min = -1.0f, float p_target_max = 1.0f)
 		=> base.patch_out(p_target_module, p_target_param, p_source_min, p_source_max, p_target_min, p_target_max);
 	
-	public override StereoSignal get_audio_signal() => _cached_audio_chain;
+	public override StereoSignal get_audio_signal() => _cached_stereo_chain;
 	public override MonoSignal get_mod_signal() => _envelope.get_mod_signal();
 	
 	protected override void update_state() { }
@@ -82,24 +82,24 @@ public partial class SynthVoice : AudioModule
 
 		_oscillator.patch_in("frequency", glide);
 		
-		_cached_audio_chain = new StereoSignal(() =>
+		_cached_stereo_chain = new StereoSignal(() =>
 		{
 			float osc_frame = _oscillator.get_mod_signal().evaluate();
 			float env_frame = _envelope.get_mod_signal().evaluate();
 			
-			_cached_mod_sample = osc_frame * env_frame;
-			_cached_audio_left_sample = _cached_mod_sample;
-			_cached_audio_right_sample = _cached_mod_sample;
-			return new Vector2(_cached_audio_left_sample, _cached_audio_right_sample);
+			_cached_mono_sample = osc_frame * env_frame;
+			_cached_stereo_sample.X = _cached_mono_sample;
+			_cached_stereo_sample.Y = _cached_mono_sample;
+			return _cached_stereo_sample;
 		});
 		
-		_cached_mod_chain = new MonoSignal(() =>
+		_cached_mono_chain = new MonoSignal(() =>
 		{
 			float osc_frame = _oscillator.get_mod_signal().evaluate();
 			float env_frame = _envelope.get_mod_signal().evaluate();
 			
-			_cached_mod_sample = osc_frame * env_frame;
-			return _cached_mod_sample;
+			_cached_mono_sample = osc_frame * env_frame;
+			return _cached_mono_sample;
 		});
 	}
 }

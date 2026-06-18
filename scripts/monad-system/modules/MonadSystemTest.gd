@@ -23,8 +23,8 @@ func _ready() -> void:
 	lfo.set_base_value("frequency", 5)
 	lfo.patch_out(tone, "frequency", -1, 1, -5, 5)
 	
-	rnd.set_base_value("frequency", 12)
-	rnd.patch_out(tone, "frequency", -1, 1, -440, 440)
+	# rnd.set_base_value("frequency", 12)
+	# rnd.patch_out(tone, "frequency", -1, 1, -440, 440)
 	# Ranges are unnecessary for every patch_out
 	# It would be cleaner to define this per-module (if at all)
 	
@@ -32,10 +32,10 @@ func _ready() -> void:
 	# By the mod class itself?
 	
 	env.set_base_value("gate", 0.0)
-	env.set_base_value("attack", 0.05)
+	env.set_base_value("attack", 0.0)
 	env.set_base_value("hold", 0.0)
 	env.set_base_value("decay", 0.1)
-	env.set_base_value("sustain", 0.2)
+	env.set_base_value("sustain", 0.0)
 	env.set_base_value("release", 0.1)
 	# Takes longer than expected to fade out
 	env.patch_out(tone, "frequency", 0, 1, 50, 0)

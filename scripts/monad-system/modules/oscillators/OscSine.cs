@@ -21,8 +21,8 @@ public partial class OscSine : OscBase
 		float amplitude = amplitude_param.evaluate();
 		advance_phase(frequency);
 		
-		_cached_mod_sample = MathF.Sin(phase) * amplitude;
-		_cached_audio_left_sample = _cached_mod_sample;
-		_cached_audio_right_sample = _cached_mod_sample;
+		_cached_mono_sample = MathF.Sin(phase) * amplitude;
+		_cached_stereo_sample.X = _cached_mono_sample;
+		_cached_stereo_sample.Y = _cached_mono_sample;
 	}
 }

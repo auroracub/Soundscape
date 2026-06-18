@@ -4,8 +4,8 @@ using System;
 [GlobalClass]
 public partial class OscSampleAndHold : OscBase
 {
-	private StereoSignal _cached_audio_output;
-	private MonoSignal _cached_mod_output;
+	private StereoSignal _cached_stereo_output;
+	private MonoSignal _cached_mono_output;
 	
 	public OscSampleAndHold() { rebuild_signal_chain(); }
 
@@ -27,10 +27,10 @@ public partial class OscSampleAndHold : OscBase
 
 		if (phase < current_phase)
 		{
-			_cached_mod_sample = (float)GD.RandRange(-1.0, 1.0) * amplitude;
+			_cached_mono_sample = (float)GD.RandRange(-1.0, 1.0) * amplitude;
 		}
 		
-		_cached_audio_left_sample = _cached_mod_sample;
-		_cached_audio_right_sample = _cached_mod_sample;
+		_cached_stereo_sample.X = _cached_mono_sample;
+		_cached_stereo_sample.Y = _cached_mono_sample;
 	}
 }

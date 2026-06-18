@@ -41,45 +41,101 @@ public partial class Envelope : AudioModule
 		}
 	}
 	
+	/*
+	// Doesn't solve latency
+	public void set_gate(float p_value)
+	{
+		// Set the gate value immediately
+		// skipping audio signal latency
+		gate_param.base_value = p_value;
+	}
+	*/
+	
 	protected override void update_state()
 	{
 		if (_last_ticked_frame == AudioClock.current_sample_index) return;
 		_last_ticked_frame = AudioClock.current_sample_index;
 
+		//float trigger = gate_param.evaluate();
+		//float attack_value = Mathf.Max(0.001f, attack_param.evaluate());
+		//float hold_value = Mathf.Max(0.0f, hold_param.evaluate());
+		//float decay_value = Mathf.Max(0.001f, decay_param.evaluate());
+		//float sustain_value = Mathf.Clamp(sustain_param.evaluate(), 0.0f, 1.0f);
+		//float release_value = Mathf.Max(0.001f, release_param.evaluate());
+		
 		float trigger = gate_param.evaluate();
-		float attack_value = Mathf.Max(0.001f, attack_param.evaluate());
-		float hold_value = Mathf.Max(0.0f, hold_param.evaluate());
-		float decay_value = Mathf.Max(0.001f, decay_param.evaluate());
-		float sustain_value = Mathf.Clamp(sustain_param.evaluate(), 0.0f, 1.0f);
-		float release_value = Mathf.Max(0.001f, release_param.evaluate());
-
-		if (trigger > 0.0f && _prev_trigger <= 0.0f) { _is_note_on = true; _hold_timer = 0.0f; }
+		float a = Mathf.Max(0.001f, attack_param.evaluate()) * sample_rate;
+		float h = Mathf.Max(0.0f, hold_param.evaluate()) * sample_rate;
+		float d = Mathf.Max(0.001f, decay_param.evaluate()) * sample_rate;
+		float s = Mathf.Clamp(sustain_param.evaluate(), 0.0f, 1.0f);
+		float r = Mathf.Max(0.001f, release_param.evaluate()) * sample_rate;
+		
+		//if (trigger > 0.0f && _prev_trigger <= 0.0f) { _is_note_on = true; _hold_timer = 0.0f; }
+		//if (trigger <= 0.0f && _prev_trigger > 0.0f) _is_note_on = false;
+		//_prev_trigger = trigger;
+		
+		// Gating
+		if (trigger > 0.0f && _prev_trigger <= 0.0f) 
+		{ 
+			_is_note_on = true; 
+			_hold_timer = 0.0f; // Reset timer on new trigger
+		}
+		
 		if (trigger <= 0.0f && _prev_trigger > 0.0f) _is_note_on = false;
 		_prev_trigger = trigger;
-
+		
+		//if (_is_note_on)
+		//{
+			//if (_current_level < 1.0f && _hold_timer == 0.0f)
+			//{
+				//_current_level += 1.0f / (attack_value * sample_rate);
+				//if (_current_level >= 1.0f) _current_level = 1.0f;
+			//}
+			//else if (_hold_timer < hold_value) _hold_timer += 1.0f / sample_rate;
+			//else if (_current_level > sustain_value)
+			//{
+				//_current_level -= (1.0f - sustain_value) / (decay_value * sample_rate);
+				//if (_current_level < sustain_value) _current_level = sustain_value;
+			//}
+			//else if (_current_level < sustain_value) _current_level = sustain_value;
+		//}
+		//else if (_current_level > 0.0f)
+		//{
+			//_current_level -= sustain_value / (release_value * sample_rate);
+			//if (_current_level < 0.0f) _current_level = 0.0f;
+		//}
+		
+		// AHDSR processing
 		if (_is_note_on)
 		{
-			if (_current_level < 1.0f && _hold_timer == 0.0f)
+			// Attack
+			if (_current_level < 1.0f && _hold_timer <= 0.0f)
 			{
-				_current_level += 1.0f / (attack_value * sample_rate);
+				_current_level += 1.0f / a;
 				if (_current_level >= 1.0f) _current_level = 1.0f;
 			}
-			else if (_hold_timer < hold_value) _hold_timer += 1.0f / sample_rate;
-			else if (_current_level > sustain_value)
+			// Hold
+			else if (_hold_timer < h)
 			{
-				_current_level -= (1.0f - sustain_value) / (decay_value * sample_rate);
-				if (_current_level < sustain_value) _current_level = sustain_value;
+				_hold_timer += 1.0f;
+				_current_level = 1.0f;
 			}
-			else if (_current_level < sustain_value) _current_level = sustain_value;
+			// Decay to Sustain
+			else if (_current_level > s)
+			{
+				_current_level -= (1.0f - s) / d;
+				if (_current_level < s) _current_level = s;
+			}
 		}
-		else if (_current_level > 0.0f)
+		else
 		{
-			_current_level -= sustain_value / (release_value * sample_rate);
+			// Release
+			_current_level -= _current_level / r;
 			if (_current_level < 0.0f) _current_level = 0.0f;
 		}
 		
-		_cached_mod_sample = _current_level;
-		_cached_audio_left_sample = _cached_mod_sample;
-		_cached_audio_right_sample = _cached_mod_sample;
+		_cached_mono_sample = _current_level;
+		_cached_stereo_sample.X = _cached_mono_sample;
+		_cached_stereo_sample.Y = _cached_mono_sample;
 	}
 }
