@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class SynthSpeaker3D : AudioStreamPlayer3D
+public partial class SynthSpeaker2D : AudioStreamPlayer2D
 {
 	[Export] public float sample_rate { get; set; } = 44100.0f;
 	
