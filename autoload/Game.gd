@@ -1,5 +1,10 @@
 extends Node
 
+var player_ref: Node
+
+func register_player(p_ref: Node) -> void:
+	player_ref = p_ref
+
 func _unhandled_input(event: InputEvent) -> void:
 	# Detect left-click, right-click, or middle-click
 	if event is InputEventMouseButton and event.pressed:

@@ -23,13 +23,22 @@ public partial class OscWavetable : OscBase
 	
 	public override Mod get_mod_from_name(string p_mod_name)
 	{
-		return p_mod_name.ToLower() switch
+		switch(p_mod_name.ToLower())
 		{
-			"freq" or "frequency" => frequency_param,
-			"amp" or "amplitude" => amplitude_param,
-			"morph" or "position" or "pos" => morph_param,
-			_ => null
-		};
+			case "freq":
+			case "frequency":
+				return frequency_param;
+			case "amp":
+			case "amplitude":
+				return amplitude_param;
+			case "morph":
+			case "position":
+			case "pos":
+				return morph_param;
+			default:
+				GD.PrintErr($"[AudioModule Error] No mod named '{p_mod_name}' found in '{this.GetType().Name}'");
+				return null;
+		}
 	}
 	
 	protected override void update_state(float p_sample_rate)

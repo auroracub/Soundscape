@@ -1,48 +1,45 @@
-[gd_scene format=3 uid="uid://bw8unlwd1nfk4"]
+[gd_scene format=3 uid="uid://wvem0agvn5b5"]
 
 [ext_resource type="PackedScene" uid="uid://dtlu8swcas1o" path="res://entities/Player3D.tscn" id="1_3omgm"]
-[ext_resource type="PackedScene" uid="uid://bp63wg5237f3w" path="res://entities/TestBlob3D.tscn" id="2_6wbmo"]
-[ext_resource type="Script" path="res://Modules/Organisms/Organism.gd" id="3_nb556"]
-[ext_resource type="Material" uid="uid://bu1i0it37n54j" path="res://shaders/BlobMaterial.tres" id="4_3nfcv"]
-[ext_resource type="Script" path="res://Modules/Synths/MonoSynth3D.cs" id="5_y4jy8"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_sg0sd"]
-radius = 0.1
-height = 0.2
-radial_segments = 16
-rings = 8
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_jnaf1"]
-radius = 0.28
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_xtks7"]
-noise_type = 3
-frequency = 0.1
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_toqsj"]
-noise = SubResource("FastNoiseLite_xtks7")
+[ext_resource type="Script" uid="uid://go1tnf2o046r" path="res://scripts/dsp/testing/TestScene.gd" id="1_qhp15"]
+[ext_resource type="PackedScene" uid="uid://jw5ngtlpf6h0" path="res://spaces/TestSpeaker001.tscn" id="1_uevkk"]
+[ext_resource type="PackedScene" uid="uid://heah7riuttdt" path="res://spaces/HemisphereRoom.glb" id="2_qhp15"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7v700"]
-albedo_texture = SubResource("NoiseTexture2D_toqsj")
 
 [sub_resource type="Environment" id="Environment_04nio"]
 background_mode = 1
 background_color = Color(0.8217887, 0.82178867, 0.82178867, 1)
 tonemap_mode = 3
+glow_enabled = true
+glow_bloom = 0.17
 fog_enabled = true
 fog_mode = 1
-fog_light_color = Color(1, 1, 1, 1)
+fog_light_color = Color(0.972549, 0, 0.45882353, 1)
 fog_light_energy = 1.5
 fog_density = 1.0
-fog_depth_curve = 0.5
-fog_depth_begin = 4.0
-fog_depth_end = 22.0
+fog_height = 3.21
+fog_height_density = 0.9056
+fog_depth_curve = 0.24148452
+fog_depth_begin = 0.0
+fog_depth_end = 20.5
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_7v700"]
 
 [sub_resource type="Compositor" id="Compositor_2p4cr"]
 
-[node name="Node3D" type="Node3D" unique_id=881984792]
+[node name="Node3D" type="Node3D" unique_id=881984792 node_paths=PackedStringArray("player_node")]
+script = ExtResource("1_qhp15")
+player_node = NodePath("Player3d")
+
+[node name="SpeakerA" parent="." unique_id=1307446938 instance=ExtResource("1_uevkk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3)
+
+[node name="Room" parent="." unique_id=869547218 instance=ExtResource("2_qhp15")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+
+[node name="SpeakerB" parent="Room" unique_id=1333117063 instance=ExtResource("1_uevkk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=406609292]
 transform = Transform3D(1, 0, 0, 0, -0.20331712, 0.9791129, 0, -0.9791129, -0.20331712, 0, 0, 0)
@@ -50,42 +47,11 @@ transform = Transform3D(1, 0, 0, 0, -0.20331712, 0.9791129, 0, -0.9791129, -0.20
 [node name="Player3d" parent="." unique_id=269860568 instance=ExtResource("1_3omgm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 
-[node name="BlobOne" parent="." unique_id=27032108 instance=ExtResource("2_6wbmo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3, 0.68, 7.1)
-_dbg_enable_node = false
-frequency = 130.81
-tempo = 100.0
-
-[node name="BlobTwo" parent="." unique_id=710529201 instance=ExtResource("2_6wbmo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0.4, -6.5)
-_dbg_enable_node = false
-frequency = 261.63
-tempo = 40.0
-
-[node name="BlobThree" parent="." unique_id=520975637 instance=ExtResource("2_6wbmo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0.3, 1.9)
-_dbg_enable_node = false
-frequency = 523.25
-
-[node name="Organism" type="Node3D" parent="." unique_id=76079781]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("3_nb556")
-bpm = null
-
-[node name="Blob" type="MeshInstance3D" parent="Organism" unique_id=1106208528]
-material_override = ExtResource("4_3nfcv")
-mesh = SubResource("SphereMesh_sg0sd")
-
-[node name="AnimatableBody3D" type="AnimatableBody3D" parent="Organism/Blob" unique_id=1579757966]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Organism/Blob/AnimatableBody3D" unique_id=874250831]
-shape = SubResource("SphereShape3D_jnaf1")
-
-[node name="Synth" type="AudioStreamPlayer3D" parent="Organism" unique_id=489408527]
-volume_db = -18.0
-max_db = -18.0
-script = ExtResource("5_y4jy8")
-metadata/_custom_type_script = "uid://c3c2im5earnx"
+[node name="Wall" type="CSGBox3D" parent="." unique_id=1850170234]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, -5.975687)
+use_collision = true
+size = Vector3(8.015, 7.175, 0.25)
+material = SubResource("StandardMaterial3D_7v700")
 
 [node name="Ground" type="CSGBox3D" parent="." unique_id=687797650]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)

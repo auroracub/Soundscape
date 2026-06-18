@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://jw5ngtlpf6h0"]
 
-[ext_resource type="Script" uid="uid://bdim8dhsp0ai4" path="res://scripts/testing/Test001.gd" id="1_l13r3"]
+[ext_resource type="Script" uid="uid://dws6ylybswanv" path="res://scripts/dsp/testing/TestSpeaker.gd" id="1_8vca1"]
 [ext_resource type="Material" uid="uid://d16mj8xgyiivu" path="res://shaders/BasicMaterial.tres" id="2_eiwq6"]
+[ext_resource type="Script" uid="uid://csgdfbhitcb5h" path="res://scripts/dsp/synths/SynthSpeaker3D.cs" id="2_l13r3"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_23nea"]
 radius = 0.3
@@ -11,7 +12,7 @@ height = 0.6
 radius = 0.3
 
 [node name="Test" type="Node3D" unique_id=1195499044]
-script = ExtResource("1_l13r3")
+script = ExtResource("1_8vca1")
 
 [node name="SpeakerA" type="MeshInstance3D" parent="." unique_id=1307446938]
 mesh = SubResource("SphereMesh_23nea")
@@ -22,9 +23,8 @@ surface_material_override/0 = ExtResource("2_eiwq6")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SpeakerA/AnimatableBody3D" unique_id=88099731]
 shape = SubResource("SphereShape3D_23nea")
 
-[node name="Speaker" type="AudioStreamPlayer3D" parent="." unique_id=1898101742]
-volume_db = -18.0
+[node name="SynthSpeaker3D" type="AudioStreamPlayer3D" parent="." unique_id=170025281]
+attenuation_model = 2
 unit_size = 2.0
-max_db = -18.0
-max_distance = 200.0
-metadata/_custom_type_script = "uid://bngftem76o6nw"
+script = ExtResource("2_l13r3")
+metadata/_custom_type_script = "uid://csgdfbhitcb5h"

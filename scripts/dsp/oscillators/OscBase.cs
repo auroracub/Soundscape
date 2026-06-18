@@ -10,25 +10,18 @@ public abstract partial class OscBase : AudioModule
 	
 	public override Mod get_mod_from_name(string p_mod_name)
 	{
-		return p_mod_name.ToLower() switch
+		switch (p_mod_name.ToLower())
 		{
-			"freq" or "frequency" => frequency_param,
-			"amp" or "amplitude" => amplitude_param,
-			_ => null
-		};
-		
-		//switch (p_mod_name.ToLower())
-		//{
-			//case "freq":
-			//case "frequency":
-				//return frequency_param;
-			//case "amp":
-			//case "amplitude":
-				//return amplitude_param;
-			//default:
-				//GD.PrintErr($"[AudioModule Error] No mod named '{p_mod_name}' found in '{this.GetType().Name}'");
-				//return null;
-		//}
+			case "freq":
+			case "frequency":
+				return frequency_param;
+			case "amp":
+			case "amplitude":
+				return amplitude_param;
+			default:
+				GD.PrintErr($"[AudioModule Error] No mod named '{p_mod_name}' found in '{this.GetType().Name}'");
+				return null;
+		}
 	}
 	
 	protected void advance_phase(float p_sample_rate, float p_freq)

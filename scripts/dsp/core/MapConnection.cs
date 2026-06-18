@@ -1,13 +1,13 @@
 using Godot;
 
-public class PatchConnection
+public class MapConnection
 {
 	public AudioModule source { get; private set; }
 	
 	private float _scale;
 	private float _bias;
 
-	public PatchConnection(AudioModule p_source, float p_t_min, float p_t_max, float p_s_min, float p_s_max)
+	public MapConnection(AudioModule p_source, float p_t_min, float p_t_max, float p_s_min, float p_s_max)
 	{
 		source = p_source;
 		

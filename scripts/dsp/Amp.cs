@@ -8,12 +8,17 @@ public partial class Amp : AudioModule
 	
 	public override Mod get_mod_from_name(string p_mod_name)
 	{
-		return p_mod_name.ToLower() switch
+		switch (p_mod_name.ToLower())
 		{
-			"input" => input_param,
-			"level" or "gain" => level_param,
-			_ => null
-		};
+			case "input":
+				return input_param;
+			case "level":
+			case "gain":
+				return level_param;
+			default:
+				GD.PrintErr($"[AudioModule Error] No mod named '{p_mod_name}' found in '{this.GetType().Name}'");
+				return null;
+		}
 	}
 	
 	protected override void update_state(float p_sample_rate)

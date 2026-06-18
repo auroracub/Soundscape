@@ -21,16 +21,25 @@ public partial class Envelope : AudioModule
 
 	public override Mod get_mod_from_name(string p_mod_name)
 	{
-		return p_mod_name.ToLower() switch
+		switch (p_mod_name.ToLower())
 		{
-			"gate" => gate_param,
-			"attack" => attack_param,
-			"hold" => hold_param,
-			"decay" => decay_param,
-			"sustain" => sustain_param,
-			"release" => release_param,
-			_ => null
-		};
+			case "gate":
+			case "trigger":
+				return gate_param;
+			case "attack":
+				return attack_param;
+			case "hold":
+				return hold_param;
+			case "decay":
+				return decay_param;
+			case "sustain":
+				return sustain_param;
+			case "release":
+				return release_param;
+			default:
+				GD.PrintErr($"[AudioModule Error] No mod named '{p_mod_name}' found in '{this.GetType().Name}'");
+				return null;
+		}
 	}
 	
 	protected override void update_state(float p_sample_rate)

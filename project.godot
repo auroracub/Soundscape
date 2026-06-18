@@ -15,13 +15,9 @@ run/main_scene="uid://wvem0agvn5b5"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 config/icon="res://icons/Icon.svg"
 
-[audio]
-
-buses/default_bus_layout="uid://ltadrr24c6vq"
-
 [autoload]
 
-GlobalGuy="*uid://1y676d3npk4l"
+Game="*uid://1y676d3npk4l"
 
 [dotnet]
 

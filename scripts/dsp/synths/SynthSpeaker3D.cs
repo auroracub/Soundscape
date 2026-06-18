@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class Speaker2D : AudioStreamPlayer2D
+public partial class SynthSpeaker3D : AudioStreamPlayer3D
 {
 	[Export] public float sample_rate { get; set; } = 44100.0f;
 	
@@ -38,7 +38,7 @@ public partial class Speaker2D : AudioStreamPlayer2D
 
 		int frames_available = _playback.GetFramesAvailable();
 		if (frames_available <= 0) return;
-
+		
 		Vector2[] sample_buffer = new Vector2[frames_available];
 
 		for (int i = 0; i < frames_available; i++)
