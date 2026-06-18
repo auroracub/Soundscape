@@ -11,13 +11,18 @@ config_version=5
 [application]
 
 config/name="Soundscape"
-run/main_scene="uid://wvem0agvn5b5"
+run/main_scene="uid://bc2gbukawssge"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 config/icon="res://icons/Icon.svg"
 
 [autoload]
 
 Game="*uid://1y676d3npk4l"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 
 [dotnet]
 

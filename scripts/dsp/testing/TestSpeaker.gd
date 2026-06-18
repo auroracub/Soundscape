@@ -15,7 +15,7 @@ func _ready() -> void:
 	voice.set_value("frequency", frequency)
 	voice.set_value("glide", 0.2)
 	voice.set_patch(tone, "frequency")
-	voice.set_callback(Callable(self, "debug"))
+	voice.set_output_callback(Callable(self, "debug"))
 	
 	tone.set_value("frequency", frequency)
 	tone.set_patch(amp, "input")
@@ -26,7 +26,7 @@ func _ready() -> void:
 	rnd.set_value("frequency", 5.0)
 	rnd.map_add(env, "gate", -1.0, 1.0)
 	rnd.map_multiply(voice, "frequency", 0.5, 1.0)
-	rnd.set_callback(Callable(self, "debug"))
+	rnd.set_output_callback(Callable(self, "debug"))
 	
 	env.set_value("gate", 1.0)
 	env.set_value("attack", 0.01)
