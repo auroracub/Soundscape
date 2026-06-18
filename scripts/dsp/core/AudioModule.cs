@@ -16,8 +16,8 @@ public abstract partial class AudioModule : RefCounted
 	protected float cached_mono_sample = 0.0f;
 	protected Vector2 cached_stereo_sample = Vector2.Zero;
 	
-	private Callable _frame_callback;
-	private bool _has_callback = false;
+	private Callable _output_callback;
+	private bool _has_output_callback = false;
 	
 	// Audio modules are bipolar (-1 to 1) by default
 	public virtual float default_source_min => -1.0f;
@@ -151,14 +151,14 @@ public abstract partial class AudioModule : RefCounted
 		map_multiply(p_target_module, p_target_mod_name);
 	}
 	
-	public void set_callback(Callable p_callback)
+	public void set_output_callback(Callable p_callback)
 	{
-		_frame_callback = p_callback;
+		_output_callback = p_callback;
 		// ISSUE:
 		// Not sure how to determine whether callback is valid
 		// No IsValid or IsDefault for Godot callbacks, and this
 		// checking for null value doesn't seem to work
-		_has_callback = _frame_callback.Target != null;
+		_has_output_callback = _output_callback.Target != null;
 		//GD.Print(_frame_callback.Target);
 		//
 		//if (!_has_callback)
@@ -167,16 +167,16 @@ public abstract partial class AudioModule : RefCounted
 		//}
 	}
 	
-	public void remove_callback(Callable p_callback)
+	public void remove_output_callback(Callable p_callback)
 	{
 		// _frame_callback = null;
-		_has_callback = false;
+		_has_output_callback = false;
 	}
 	
 	// Frame delta can be included, but it's not currently necessary
 	public void process_frame()
 	{
-		if (!_has_callback) return;
-		_frame_callback.Call(cached_mono_sample);
+		if (!_has_output_callback) return;
+		_output_callback.Call(cached_mono_sample);
 	}
 }

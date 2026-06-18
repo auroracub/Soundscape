@@ -6,28 +6,26 @@ using Godot;
 [GlobalClass]
 public partial class AudioLib : Godot.GodotObject
 {
-	public static float SecondsToHz(float seconds)
+	public static float seconds_to_hz(float p_seconds)
 	{
-		if (seconds <= 0.00001f) return 0.0f;
-		return 1.0f / seconds;
+		if (p_seconds <= 0.00001f) return 0.0f;
+		return 1.0f / p_seconds;
 	}
 
-	public static float HzToSeconds(float hz)
+	public static float hz_to_seconds(float p_hz)
 	{
-		if (hz <= 0.00001f) return 0.0f;
-		return 1.0f / hz;
-	}
-
-	// Converts a standard MIDI note integer calculation down into true Hertz frequency
-	public static float MidiToHz(int midiNote)
-	{
-		return 440.0f * (float)Math.Pow(2.0, (midiNote - 69) / 12.0);
+		if (p_hz <= 0.00001f) return 0.0f;
+		return 1.0f / p_hz;
 	}
 	
-	// Converts a standard MIDI note integer calculation down into true Hertz frequency
-	public static int HzToMidi(float hz)
+	public static float midi_to_hz(int p_midi_note)
+	{
+		return 440.0f * (float)Math.Pow(2.0, (p_midi_note - 69) / 12.0);
+	}
+	
+	public static int hz_to_midi(float p_hz)
 	{
 		// Hasn't been tested yet
-		return (int)(Math.Log(hz / 440.0f) * 12.0) + 69;
+		return (int)(Math.Log(p_hz / 440.0f) * 12.0) + 69;
 	}
 }

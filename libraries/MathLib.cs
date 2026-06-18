@@ -11,14 +11,13 @@ public partial class MathLib : Godot.GodotObject
 		//return Mathf.Remap(value, fromMin, fromMax, toMin, toMax);
 	//}
 	
-	public static float remap(float in_min, float in_max, float out_min, float out_max, float value)
+	public static float remap(float p_input_min, float p_input_max, float p_output_min, float p_output_max, float value)
 	{
-		return out_min + (value - in_min) * (out_max - out_min) / (in_max - in_min);
+		return p_output_min + (value - p_input_min) * (p_output_max - p_output_min) / (p_input_max - p_input_min);
 	}
 	
-	public static float seconds_to_hz(float seconds)
+	public static float wrap(float p_value, float p_min, float p_max)
 	{
-		if (seconds <= 0.00001f) return 0.0f;
-		return 1.0f / seconds;
+		return (p_value - p_min) % p_max + p_min;
 	}
 }

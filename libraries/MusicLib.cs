@@ -6,51 +6,50 @@ using Godot;
 [GlobalClass]
 public partial class MusicLib : RefCounted
 {
-	public static float get_degree_from_frequency(Soundscape.Modules.Scale scale, float targetFrequency)
+	public static float get_degree_from_frequency(Soundscape.Modules.Scale scale, float target_frequency)
 	{
-		if (scale == null || targetFrequency <= 0.0f) return 0.0f;
+		if (scale == null || target_frequency <= 0.0f) return 0.0f;
 
-		float[] cache = scale.FrequencyCache;
+		float[] cache = scale.frequency_cache;
 		int count = cache.Length;
 
-		// 1. Edge case guards: if frequency is lower than our lower bound or higher than upper bound
-		if (targetFrequency <= cache[0]) return 0.0f;
-		if (targetFrequency >= cache[count - 1]) return (float)(count - 1);
+		// Edge case guards
+		if (target_frequency <= cache[0]) return 0.0f;
+		if (target_frequency >= cache[count - 1]) return (float)(count - 1);
 
-		// 2. High-Performance Binary Search to find the bracket indices O(log N)
+		// Binary Search to find the neighboring indices
 		int low = 0;
 		int high = count - 1;
 
 		while (low <= high)
 		{
 			int mid = (low + high) >> 1; // Bitshift division by 2 for speed
-			float midVal = cache[mid];
+			float mid_val = cache[mid];
 
-			if (midVal < targetFrequency)
+			if (mid_val < target_frequency)
 				low = mid + 1;
-			else if (midVal > targetFrequency)
+			else if (mid_val > target_frequency)
 				high = mid - 1;
 			else
-				return (float)mid; // Exact perfect frequency match found!
+				return (float)mid; // Exact frequency match
 		}
 
-		// 3. Extract the two closest neighboring notes bounding our frequency target
+		// Extract the two closest neighboring notes
 		// After binary search finishes without an exact match, 'high' is the left index, 'low' is the right index.
-		int idxLeft = high;
-		int idxRight = low;
+		int idx_left = high;
+		int idx_right = low;
 
-		float freqLeft = cache[idxLeft];
-		float freqRight = cache[idxRight];
+		float freq_left = cache[idx_left];
+		float freq_right = cache[idx_right];
 
-		// 4. Calculate the fractional position between the two notes
-		// This calculates the exact percentage ratio distance between the two frequencies
-		float fractionalWeight = (targetFrequency - freqLeft) / (freqRight - freqLeft);
+		// Calculate the fractional position between the two notes
+		float fractional_weight = (target_frequency - freq_left) / (freq_right - freq_left);
 
-		// 5. Convert absolute array index back into a scale degree relative to the scale's Base MIDI Note
-		float absoluteIndexPosition = (float)idxLeft + fractionalWeight;
-		float degreeFromBase = absoluteIndexPosition - scale.BaseMidiNote;
+		// Convert fractional array index back into a scale degree relative to the scale's base midi note
+		float index_relative = (float)idx_left + fractional_weight;
+		float degree_from_base = index_relative - scale.base_midi_note;
 
-		return degreeFromBase;
+		return degree_from_base;
 	}
 	
 	//// High-performance, unrolled branchless-style decision tree for a 128-element monotonic array.
@@ -114,20 +113,20 @@ public partial class MusicLib : RefCounted
 	//}
 	
 	// Resolves the absolute target frequency by taking a starting MIDI note and moving N scale degrees up or down
-	public static float GetNthDegreeFrequency(Soundscape.Modules.Scale scale, int currentMidiNote, int degreeOffset)
+	public static float get_nth_degree_frequency(Soundscape.Modules.Scale scale, int current_midi_note, int degree_offset)
 	{
 		if (scale == null) return 440.0f; // Fail-safe fallback
 
 		// Scale steps translate directly to shifting our absolute MIDI note index bound
-		int targetMidiNote = currentMidiNote + degreeOffset;
+		int target_midi_note = current_midi_note + degree_offset;
 		
-		return scale.GetFrequencyByMidi(targetMidiNote);
+		return scale.get_frequency_from_midi(target_midi_note);
 	}
 
 	// Convenience function to resolve the target frequency from an offset note index directly
-	public static float GetFrequencyFromRoot(Soundscape.Modules.Scale scale, int degreeFromRoot)
+	public static float get_frequency_from_root(Soundscape.Modules.Scale scale, int degree_from_root)
 	{
 		if (scale == null) return 440.0f;
-		return scale.GetFrequencyByMidi(scale.BaseMidiNote + degreeFromRoot);
+		return scale.get_frequency_from_midi(scale.base_midi_note + degree_from_root);
 	}
 }

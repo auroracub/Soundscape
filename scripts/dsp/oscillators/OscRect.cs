@@ -2,44 +2,19 @@ using Godot;
 using System;
 
 [GlobalClass]
-public abstract partial class OscBase : AudioModule
+public partial class OscRect : OscBase
 {
-	public Mod frequency_param = new Mod(440.0f);
-	public Mod amplitude_param = new Mod(1.0f);
-	public Mod modulation_param = new Mod(0.0f);
-	public Mod morph_param = new Mod(0.0f);
-	protected float phase = 0.0f;
-	
-	public override Mod get_mod_from_name(string p_mod_name)
+	protected override void update_state(float p_sample_rate)
 	{
-		switch (p_mod_name.ToLower())
-		{
-			case "freq":
-			case "frequency":
-				return frequency_param;
-			case "amp":
-			case "amplitude":
-				return amplitude_param;
-			case "mod":
-			case "modulation":
-			case "phase modulation":
-				return modulation_param;
-			case "morph":
-				return morph_param;
-			default:
-				GD.PrintErr($"[AudioModule Error] No mod named '{p_mod_name}' found in '{this.GetType().Name}'");
-				return null;
-		}
-	}
-	
-	protected void advance_phase(float p_sample_rate, float p_freq)
-	{
-		float modulation = modulation_param.evaluate();
-		// phase += (MathF.Tau * p_freq) / p_sample_rate;
-		// while (phase >= MathF.Tau) phase -= MathF.Tau;
-		// while (phase < 0.0f) phase += MathF.Tau;
-		// phase = MathLib.wrap(phase + (MathF.Tau * p_freq) / p_sample_rate, 0.0f, MathF.Tau);
-		phase = MathLib.wrap(phase + (MathF.Tau * p_freq / p_sample_rate) + modulation, 0.0f, MathF.Tau);
+		float frequency = frequency_param.evaluate();
+		float amplitude = amplitude_param.evaluate();
+		float morph = morph_param.evaluate();
+		
+		advance_phase(p_sample_rate, frequency);
+		
+		cached_mono_sample = phase < morph ? amplitude : 0.0f;
+		cached_stereo_sample.X = cached_mono_sample;
+		cached_stereo_sample.Y = cached_mono_sample;
 	}
 	
 	// Blehh

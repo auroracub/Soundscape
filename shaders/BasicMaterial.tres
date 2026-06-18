@@ -5,5 +5,5 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_8vbra")
-shader_parameter/u_color = Color(0.96862745, 0, 1, 1)
-shader_parameter/u_emissive_scale = 2.0
+shader_parameter/u_color = Color(0, 0.6833334, 1, 1)
+shader_parameter/u_emissive_scale = 5.0

@@ -1,9 +1,8 @@
-[gd_scene format=3 uid="uid://wvem0agvn5b5"]
+[gd_scene format=3 uid="uid://b3kylnry87tlp"]
 
-[ext_resource type="PackedScene" uid="uid://dtlu8swcas1o" path="res://entities/player/Player3D.tscn" id="1_3omgm"]
-[ext_resource type="Script" uid="uid://go1tnf2o046r" path="res://scripts/dsp/testing/TestScene.gd" id="1_qhp15"]
-[ext_resource type="PackedScene" uid="uid://jw5ngtlpf6h0" path="res://spaces/TestSpeaker001.tscn" id="1_uevkk"]
-[ext_resource type="PackedScene" uid="uid://heah7riuttdt" path="res://spaces/HemisphereRoom.glb" id="2_qhp15"]
+[ext_resource type="Script" uid="uid://go1tnf2o046r" path="res://scripts/dsp/testing/TestScene.gd" id="1_j7mdx"]
+[ext_resource type="PackedScene" uid="uid://bc2gbukawssge" path="res://entities/organisms/plant/Plant3D.tscn" id="2_h78ro"]
+[ext_resource type="PackedScene" uid="uid://dtlu8swcas1o" path="res://entities/player/Player3D.tscn" id="4_vvlwe"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7v700"]
 
@@ -28,29 +27,26 @@ fog_depth_end = 20.5
 [sub_resource type="Compositor" id="Compositor_2p4cr"]
 
 [node name="Node3D" type="Node3D" unique_id=881984792 node_paths=PackedStringArray("player_node")]
-script = ExtResource("1_qhp15")
+script = ExtResource("1_j7mdx")
 player_node = NodePath("Player3d")
 
-[node name="SpeakerA" parent="." unique_id=1307446938 instance=ExtResource("1_uevkk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3)
+[node name="PlantA" parent="." unique_id=1339420290 instance=ExtResource("2_h78ro")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 7)
 
-[node name="Room" parent="." unique_id=869547218 instance=ExtResource("2_qhp15")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+[node name="PlantB" parent="." unique_id=2094558796 instance=ExtResource("2_h78ro")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -1)
 
-[node name="SpeakerB" parent="Room" unique_id=1333117063 instance=ExtResource("1_uevkk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+[node name="PlantC" parent="." unique_id=1837401013 instance=ExtResource("2_h78ro")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.641896, 0, -11)
+
+[node name="PlantD" parent="." unique_id=1865931482 instance=ExtResource("2_h78ro")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7162075, 0, -15)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=406609292]
 transform = Transform3D(1, 0, 0, 0, -0.20331712, 0.9791129, 0, -0.9791129, -0.20331712, 0, 0, 0)
 
-[node name="Player3d" parent="." unique_id=269860568 instance=ExtResource("1_3omgm")]
+[node name="Player3d" parent="." unique_id=269860568 instance=ExtResource("4_vvlwe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
-
-[node name="Wall" type="CSGBox3D" parent="." unique_id=1850170234]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, -5.975687)
-use_collision = true
-size = Vector3(8.015, 7.175, 0.25)
-material = SubResource("StandardMaterial3D_7v700")
 
 [node name="Ground" type="CSGBox3D" parent="." unique_id=687797650]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)

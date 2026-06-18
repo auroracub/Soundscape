@@ -1,10 +1,10 @@
-[gd_scene format=3 uid="uid://dsji71sb80msy"]
+[gd_scene format=3 uid="uid://bxs665cey4twa"]
 
-[ext_resource type="Script" uid="uid://go1tnf2o046r" path="res://scripts/dsp/testing/TestScene.gd" id="1_i0ria"]
-[ext_resource type="Material" uid="uid://d16mj8xgyiivu" path="res://shaders/BasicMaterial.tres" id="2_gxpf8"]
-[ext_resource type="Script" uid="uid://bt8vc6o4rbnm7" path="res://scripts/dsp/testing/MonadSystemTest.gd" id="2_to61l"]
-[ext_resource type="PackedScene" uid="uid://dtlu8swcas1o" path="res://entities/player/Player3D.tscn" id="3_4tl6h"]
-[ext_resource type="Script" uid="uid://csgdfbhitcb5h" path="res://scripts/dsp/synths/SynthSpeaker3D.cs" id="3_to61l"]
+[ext_resource type="Script" uid="uid://go1tnf2o046r" path="res://scripts/dsp/testing/TestScene.gd" id="1_0ghe3"]
+[ext_resource type="PackedScene" uid="uid://dtlu8swcas1o" path="res://entities/player/Player3D.tscn" id="2_civwr"]
+[ext_resource type="Material" uid="uid://d16mj8xgyiivu" path="res://shaders/BasicMaterial.tres" id="3_vbtyr"]
+[ext_resource type="Script" uid="uid://sr8nx7n4p4o" path="res://scripts/dsp/testing/SequencerTest.gd" id="4_0ghe3"]
+[ext_resource type="Script" uid="uid://csgdfbhitcb5h" path="res://scripts/dsp/synths/SynthSpeaker3D.cs" id="5_mcbq8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7v700"]
 
@@ -29,18 +29,18 @@ fog_depth_end = 38.0
 [sub_resource type="Compositor" id="Compositor_2p4cr"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_to61l"]
-material = ExtResource("2_gxpf8")
+material = ExtResource("3_vbtyr")
 radius = 0.23
 height = 0.44
 
 [node name="Node3D" type="Node3D" unique_id=881984792 node_paths=PackedStringArray("player_node")]
-script = ExtResource("1_i0ria")
+script = ExtResource("1_0ghe3")
 player_node = NodePath("Player3d")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=406609292]
 transform = Transform3D(1, 0, 0, 0, -0.20331712, 0.9791129, 0, -0.9791129, -0.20331712, 0, 0, 0)
 
-[node name="Player3d" parent="." unique_id=269860568 instance=ExtResource("3_4tl6h")]
+[node name="Player3d" parent="." unique_id=269860568 instance=ExtResource("2_civwr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 
 [node name="Wall" type="CSGBox3D" parent="." unique_id=1850170234]
@@ -63,10 +63,12 @@ compositor = SubResource("Compositor_2p4cr")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=350780769]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("SphereMesh_to61l")
-script = ExtResource("2_to61l")
+script = ExtResource("4_0ghe3")
 
 [node name="SynthSpeaker3D" type="AudioStreamPlayer3D" parent="MeshInstance3D" unique_id=2086184128]
 attenuation_model = 2
-unit_size = 2.0
+unit_size = 4.0
 max_distance = 300.0
-script = ExtResource("3_to61l")
+attenuation_filter_cutoff_hz = 12000.0
+attenuation_filter_db = -18.0
+script = ExtResource("5_mcbq8")

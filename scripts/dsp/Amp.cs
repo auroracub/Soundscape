@@ -4,7 +4,7 @@ using Godot;
 public partial class Amp : AudioModule
 {
 	public Mod input_param = new Mod(0.0f);
-	public Mod level_param = new Mod(0.0f);
+	public Mod level_param = new Mod(1.0f);
 	
 	public override Mod get_mod_from_name(string p_mod_name)
 	{
